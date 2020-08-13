@@ -4,9 +4,7 @@ from mpl_toolkits.mplot3d import Axes3D
 
 
 def get_dict_classes():
-    return {1:"building_windows_float_processed", 2:"building_windows_non_float_processed",
-            3:"vehicle_windows_float_processed", 4:"vehicle_windows_non_float_processed", 5:"containers",
-            6:"tableware", 7:"headlamps"}
+    return {0:"Cammeo", 1:"Osmancik"}
 
 def remove_example_id(data):
     return np.delete(data, 0, axis=1) # remove the first column
@@ -14,10 +12,10 @@ def remove_example_id(data):
 def split_x_y(data):
     x = data[:, 0:-1]
     y = data[:, -1]
-    return x, y
+    return x.astype('float'), y.astype('int')
 
 def remove_unnecessary_features(data):
-    necessary_features = [2, 3, 7]
+    necessary_features = [1, 2, 5]
     return np.delete(data, [i for i in range(data.shape[1]) if i not in necessary_features],axis=1)
 
 
@@ -29,8 +27,9 @@ def plot_data(x, y):
         a = np.where(y == i)
         a = x[a, :].squeeze()
         ax.scatter(a[:,0], a[:, 1], a[:,2], label=classes[i])
-    ax.set_xlabel("Mg")
-    ax.set_ylabel("Al")
-    ax.set_zlabel("Ba")
-    ax.legend(fontsize=8, ncol=2)
+    ax.set_xlabel("Perimeter (pixels)")
+    ax.set_ylabel("Major Axis Length (pixels)")
+    ax.set_zlabel("Convex Area (pixels)")
+    ax.legend(fontsize=8, ncol=1)
+    plt.title("binary classification by 3 relevant parameters")
     plt.show()
