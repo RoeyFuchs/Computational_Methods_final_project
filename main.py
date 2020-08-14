@@ -1,7 +1,7 @@
 import pandas as pd  # for load dataset
 import numpy as np
 from scipy.io import arff #convert from artff to csv
-from utils import remove_example_id, split_x_y, remove_unnecessary_features,split_k, plot_data
+from utils import remove_example_id, split_x_y, remove_unnecessary_features,split_k,shuffel, plot_data
 from sklearn.model_selection import train_test_split, cross_validate
 from sklearn import svm
 from Q3 import q3
@@ -54,8 +54,8 @@ for i in range(5):
     ## k fold
     x = []
     y = []
-    [x.append(train_x_cross[j]) for j in range(5) if j != i]
-    [y.append(train_y_cross[j]) for j in range(5) if j != i]
+    [x.append(train_x_cross[j].copy()) for j in range(5) if j != i]
+    [y.append(train_y_cross[j].copy()) for j in range(5) if j != i]
     x_train = np.concatenate(np.array(x))
     y_train = np.concatenate(np.array(y))
 
@@ -64,12 +64,13 @@ for i in range(5):
 
 
     learning_rate = 0.0001
-    epochs = 200
+    epochs = 100
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
     model.train()
     for ep in range(epochs):
         print("-----------", ep)
+        x_train, y_train = shuffel(x_train, y_train)
         for example_x, example_y in zip(x_train, y_train):
             optimizer.zero_grad()
             output = model(torch.from_numpy(example_x).float())

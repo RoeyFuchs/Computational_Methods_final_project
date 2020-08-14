@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+from sklearn.utils import shuffle
 
 
 def get_dict_classes():
@@ -25,7 +26,8 @@ def split_k(data_x, data_y, k):
     new_y = np.array_split(data_y, k)
     return new_x, new_y
 
-
+def shuffel(data_x, data_y):
+    return shuffle(data_x, data_y)
 
 
 def plot_data(x, y):
