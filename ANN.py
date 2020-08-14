@@ -4,15 +4,13 @@ import torch.nn.functional as F
 
 
 class ANN(nn.Module):
-    def __init__(self, input_size, hidden_size, num_classes):
+    def __init__(self):
         super(ANN, self).__init__()
-        self.fc1 = nn.Linear(input_size, hidden_size)
-        self.relu = nn.ReLU()
-        self.fc2 = nn.Linear(hidden_size, num_classes)
+        self.fc1 = nn.Linear(7, 3)
+        self.fc2 = nn.Linear(3, 2)
 
     def forward(self, x):
         x = x.view(-1, 7)
-        out = self.fc1(x)
-        out = self.relu(out)
+        out = F.relu(self.fc1(x))
         out = self.fc2(out)
         return F.log_softmax(out, dim=1)

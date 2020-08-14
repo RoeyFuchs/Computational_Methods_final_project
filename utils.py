@@ -19,6 +19,15 @@ def remove_unnecessary_features(data):
     return np.delete(data, [i for i in range(data.shape[1]) if i not in necessary_features],axis=1)
 
 
+
+def split_k(data_x, data_y, k):
+    new_x = np.array_split(data_x, k)
+    new_y = np.array_split(data_y, k)
+    return new_x, new_y
+
+
+
+
 def plot_data(x, y):
     classes = get_dict_classes()
     fig = plt.figure()
