@@ -59,8 +59,8 @@ def witout_k_fold(train_data_x, train_data_y):
         clf = svm.SVC(C=1, kernel='poly', degree=3, gamma=1, coef0=0, max_iter=20000)
 
         clf.fit(train_data_x[:k], train_data_y[:k])
-        y_hat = clf.predict(vald_x)
-        acc_vald.append(np.sum(y_hat == vald_y) / len(vald_y))
+        y_hat = clf.predict(vald_x[:int(k/5)])
+        acc_vald.append(np.sum(y_hat == vald_y[:int(k/5)]) / len(vald_y[:int(k/5)]))
 
         y_hat = clf.predict(train_data_x[:k])
         acc_train.append(np.sum(y_hat == train_data_y[:k]) / len(train_data_y[:k]))

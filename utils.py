@@ -40,9 +40,9 @@ def plot_train_vald(train, vald, x_axis, cross=True):
     plt.xticks(x_axis, x_axis)
     plt.ylabel("Mean Accuracy (%)")
     plt.xlabel("Training set size (samples)")
-    title = "Mean Accuracy as function of training set size"
+    title = "Accuracy as function of training set size"
     if cross:
-        title += ", cross-validation (5)"
+        title = "Mean " + title + ", cross-validation (5)"
     plt.title(title)
     ax.legend()
     plt.show()
