@@ -25,8 +25,8 @@ raw_data = pd.DataFrame(data[0]).to_numpy()  # load data and convert to numpy ar
 data_x, data_y = split_x_y(raw_data)  # split features and labels
 
 
-# q3
-q3(data_x, data_y, TEST_SET_SIZE)
+'''# q3
+q3(data_x, data_y, TEST_SET_SIZE)'''
 
 
 scaler = StandardScaler()
