@@ -1,3 +1,5 @@
+from random import random
+
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -28,6 +30,19 @@ def split_k(data_x, data_y, k):
 
 def shuffel(data_x, data_y):
     return shuffle(data_x, data_y)
+
+def plot_train_vald(train, vald, x_axis):
+    fig, ax = plt.subplots()
+    train = [t*100 for t in train] # change to %
+    vald = [v*100 for v in vald]
+    ax.plot(x_axis, train,'-ok', color='r', label='Train')
+    ax.plot(x_axis, vald, '-ok', color='b', label='Validation')
+    plt.xticks(x_axis, x_axis)
+    plt.ylabel("Mean Accuracy (%)")
+    plt.xlabel("Training set size (samples)")
+    plt.title("Mean Accuracy as function of training set size, cross-validation (5)")
+    ax.legend()
+    plt.show()
 
 
 def plot_data(x, y):
