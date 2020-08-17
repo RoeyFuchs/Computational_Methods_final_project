@@ -71,5 +71,5 @@ def witout_k_fold(train_data_x, train_data_y):
         print("vald: ", np.sum(result['test_score']) / len(result['test_score']))
         print("train: ", np.sum(result['train_score']) / len(result['train_score']))'''
 
-    plot_train_vald(acc_train, acc_vald, sampels_num)
+    plot_train_vald(acc_train, acc_vald, sampels_num, cross=False)
     print(":)")
