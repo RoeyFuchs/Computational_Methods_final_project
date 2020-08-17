@@ -43,6 +43,8 @@ def plot_train_vald(train, vald, x_axis, cross=True):
     title = "Accuracy as function of training set size"
     if cross:
         title = "Mean " + title + ", cross-validation (5)"
+    else:
+        title += ", single validation set"
     plt.title(title)
     ax.legend()
     plt.show()
