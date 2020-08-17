@@ -43,8 +43,8 @@ def with_k_fold(train_data_x, train_data_y):
 
 def witout_k_fold(train_data_x, train_data_y):
     training_set_size = int((4/5)*len(train_data_x))
-    vald_x = train_data_x[training_set_size:, ]
-    vald_y = train_data_y[training_set_size:]
+    vald_x = train_data_x[training_set_size+1:]
+    vald_y = train_data_y[training_set_size+1:]
 
     train_data_x = train_data_x[:training_set_size]
     train_data_y = train_data_y[:training_set_size]
@@ -62,7 +62,6 @@ def witout_k_fold(train_data_x, train_data_y):
         y_hat = clf.predict(vald_x)
         acc_vald.append(np.sum(y_hat == vald_y) / len(vald_y))
 
-        clf.fit(train_data_x[:k], train_data_y[:k])
         y_hat = clf.predict(train_data_x[:k])
         acc_train.append(np.sum(y_hat == train_data_y[:k]) / len(train_data_y[:k]))
         # result = cross_validate(clf, train_data_x, train_data_y, cv=5, scoring='accuracy', return_train_score=True)
