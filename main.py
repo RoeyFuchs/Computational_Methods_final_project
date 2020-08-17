@@ -34,12 +34,14 @@ scaler = StandardScaler()
 scaler.fit(data_x)
 data_x = scaler.transform(data_x)
 
-# q3
-q3(data_x, data_y, TEST_SET_SIZE)
+'''# q3
+q3(data_x, data_y, TEST_SET_SIZE)'''
 
 train_data_x, test_data_x, train_data_y, test_data_y = train_test_split(data_x, data_y, test_size=TEST_SET_SIZE,
                                                                         shuffle=True)  # split data to traning and
 # test set
+
+witout_k_fold(train_data_x, train_data_y)
 
 prec = [0.2, 0.4, 0.6, 0.8, 1]
 acc_train = []

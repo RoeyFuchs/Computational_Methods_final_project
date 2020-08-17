@@ -58,9 +58,13 @@ def witout_k_fold(train_data_x, train_data_y):
         print(int(len(train_data_x) * k))
         clf = svm.SVC(C=1, kernel='poly', degree=3, gamma=1, coef0=0, max_iter=20000)
 
-        a = clf.fit(train_data_x[:k], train_data_y[:k])
+        clf.fit(train_data_x[:k], train_data_y[:k])
         y_hat = clf.predict(vald_x)
-        print(np.sum(y_hat == vald_y) / len(vald_y))
+        acc_vald.append(np.sum(y_hat == vald_y) / len(vald_y))
+
+        clf.fit(train_data_x[:k], train_data_y[:k])
+        y_hat = clf.predict(train_data_x[:k])
+        acc_train.append(np.sum(y_hat == train_data_y[:k]) / len(train_data_y[:k]))
         # result = cross_validate(clf, train_data_x, train_data_y, cv=5, scoring='accuracy', return_train_score=True)
         '''acc_vald.append(round(np.sum(result['test_score']) / len(result['test_score']), 3))
         acc_train.append(round(np.sum(result['train_score']) / len(result['train_score']), 3))
@@ -68,3 +72,4 @@ def witout_k_fold(train_data_x, train_data_y):
         print("train: ", np.sum(result['train_score']) / len(result['train_score']))'''
 
     plot_train_vald(acc_train, acc_vald, sampels_num)
+    print(":)")
