@@ -57,5 +57,5 @@ def plot_data(x, y):
     ax.set_ylabel("Major Axis Length (pixels)")
     ax.set_zlabel("Convex Area (pixels)")
     ax.legend(fontsize=8, ncol=1)
-    plt.title("binary classification by 3 relevant parameters")
+    plt.title("Binary classification by 3 relevant parameters")
     plt.show()
