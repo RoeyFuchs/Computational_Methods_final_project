@@ -13,6 +13,7 @@ import torch.nn as nn
 from torch import optim
 import torch.nn.functional as F
 import torch
+from SVM_NO_REGULARIZTION import *
 
 DATA_FILE = os.getcwd() + "\data\data.arff"
 TEST_SET_SIZE = 0.1
@@ -32,6 +33,9 @@ q3(data_x, data_y, TEST_SET_SIZE)'''
 scaler = StandardScaler()
 scaler.fit(data_x)
 data_x = scaler.transform(data_x)
+
+# q3
+q3(data_x, data_y, TEST_SET_SIZE)
 
 train_data_x, test_data_x, train_data_y, test_data_y = train_test_split(data_x, data_y, test_size=TEST_SET_SIZE,
                                                                         shuffle=True)  # split data to traning and
