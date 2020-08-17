@@ -64,11 +64,5 @@ def witout_k_fold(train_data_x, train_data_y):
 
         y_hat = clf.predict(train_data_x[:k])
         acc_train.append(np.sum(y_hat == train_data_y[:k]) / len(train_data_y[:k]))
-        # result = cross_validate(clf, train_data_x, train_data_y, cv=5, scoring='accuracy', return_train_score=True)
-        '''acc_vald.append(round(np.sum(result['test_score']) / len(result['test_score']), 3))
-        acc_train.append(round(np.sum(result['train_score']) / len(result['train_score']), 3))
-        print("vald: ", np.sum(result['test_score']) / len(result['test_score']))
-        print("train: ", np.sum(result['train_score']) / len(result['train_score']))'''
 
     plot_train_vald(acc_train, acc_vald, sampels_num, cross=False)
-    print(":)")
