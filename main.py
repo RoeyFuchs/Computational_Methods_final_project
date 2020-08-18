@@ -15,6 +15,7 @@ import torch.nn.functional as F
 import torch
 from SVM_NO_REGULARIZTION import *
 from SVM_WITH_REGULARIZTION import *
+from SVM_GRID_SEARCH import *
 
 DATA_FILE = os.getcwd() + "\data\data.arff"
 TEST_SET_SIZE = 0.1
@@ -43,6 +44,7 @@ train_data_x, test_data_x, train_data_y, test_data_y = train_test_split(data_x, 
 # test set
 
 
+find_best_svm_model(train_data_x,train_data_y)
 witout_k_fold_with_regulariztion(train_data_x, train_data_y)
 witout_k_fold(train_data_x, train_data_y)
 
@@ -83,8 +85,12 @@ for k in sampels_num:
     print("train: ", np.sum(result['train_score']) / len(result['train_score']))
 
 plot_train_vald(acc_train, acc_vald, sampels_num)
-exit()
+
+
 # ANN
+# activtion function is a hyper parameter????????
+# sgd: learning rate, momentum
+# adam: learning rate, beta1, beta2, epsilon
 
 train_x_cross, train_y_cross = split_k(train_data_x, train_data_y, 5)
 models = []
