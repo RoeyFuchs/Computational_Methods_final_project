@@ -14,6 +14,7 @@ from torch import optim
 import torch.nn.functional as F
 import torch
 from SVM_NO_REGULARIZTION import *
+from SVM_WITH_REGULARIZTION import *
 
 DATA_FILE = os.getcwd() + "\data\data.arff"
 TEST_SET_SIZE = 0.1
@@ -41,7 +42,10 @@ train_data_x, test_data_x, train_data_y, test_data_y = train_test_split(data_x, 
                                                                         shuffle=True)  # split data to traning and
 # test set
 
+
+witout_k_fold_with_regulariztion(train_data_x, train_data_y)
 witout_k_fold(train_data_x, train_data_y)
+
 
 prec = [0.2, 0.4, 0.6, 0.8, 1]
 acc_train = []
