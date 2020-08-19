@@ -8,7 +8,6 @@ import sys
 
 NO_REGULARIZATION = sys.float_info.max
 
-
 # SVM
 # degree, gamma = ha'kafol (gamma * x_i * x_j), r = (b independedt), c = regulariztion
 # train_x_cross, train_y_cross = split_k(train_data_x[:int(len(train_data_x) * k)], train_data_y[:int(len(
@@ -19,7 +18,7 @@ def with_cross(train_data_x, train_data_y, regularization=False):
     prec = [0.2, 0.4, 0.6, 0.8, 1]
     acc_train = []
     acc_vald = []
-    sampels_num = [int(x * len(train_data_x)*(4/5)) for x in prec]
+    sampels_num = [int(x * len(train_data_x) * (4 / 5)) for x in prec]
     for k in sampels_num:
         print(int(len(train_data_x) * k))
         clf = svm.SVC(C=c, kernel='poly', degree=3, gamma=1, coef0=0, max_iter=20000)  # c = 0 -> no penalety
