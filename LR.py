@@ -8,7 +8,7 @@ NO_REGULARIZATION = sys.float_info.max
 
 
 def with_cross(train_data_x, train_data_y, regularization=False):
-    c = 0.001 if regularization else NO_REGULARIZATION
+    c = 2 if regularization else NO_REGULARIZATION
     prec = [0.2, 0.4, 0.6, 0.8, 1]
     acc_train = []
     acc_vald = []
@@ -28,7 +28,7 @@ def with_cross(train_data_x, train_data_y, regularization=False):
 
 
 def without_cross(train_data_x, train_data_y, regularization=False):
-    c = 0.001 if regularization else NO_REGULARIZATION
+    c = 2 if regularization else NO_REGULARIZATION
     training_set_size = int((4 / 5) * len(train_data_x))
     vald_x = train_data_x[training_set_size + 1:]
     vald_y = train_data_y[training_set_size + 1:]
