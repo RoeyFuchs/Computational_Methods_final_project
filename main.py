@@ -1,6 +1,8 @@
 import pandas as pd  # for load dataset
 import numpy as np
 from scipy.io import arff  # convert from artff to csv
+
+import SVM
 from utils import remove_example_id, split_x_y, remove_unnecessary_features, split_k, shuffel, plot_data, plot_train_vald
 from sklearn.model_selection import train_test_split, cross_validate
 from sklearn.preprocessing import StandardScaler
@@ -13,9 +15,6 @@ import torch.nn as nn
 from torch import optim
 import torch.nn.functional as F
 import torch
-from SVM import *
-from svm_grid_search import *
-from logistic_regression_without_regulariztion import  *
 
 DATA_FILE = os.getcwd() + "\data\data.arff"
 TEST_SET_SIZE = 0.1
@@ -48,7 +47,7 @@ train_data_x, test_data_x, train_data_y, test_data_y = train_test_split(data_x, 
 '''lr = lr_witout_k_fold(train_data_x, train_data_y)
 svm_model = find_best_svm_model(train_data_x,train_data_y)
 witout_k_fold_with_regulariztion(train_data_x, train_data_y)'''
-without_cross(train_data_x, train_data_y, regularization=True)
+SVM.without_cross(train_data_x, train_data_y, regularization=True)
 exit()
 
 prec = [0.2, 0.4, 0.6, 0.8, 1]
