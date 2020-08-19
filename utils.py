@@ -31,21 +31,15 @@ def split_k(data_x, data_y, k):
 def shuffel(data_x, data_y):
     return shuffle(data_x, data_y)
 
-def plot_train_vald(train, vald, x_axis, cross=False):
+def plot_train_vald(train, vald, x_axis, title, x_label, y_label):
     fig, ax = plt.subplots()
     train = [t*100 for t in train] # change to %
     vald = [v*100 for v in vald]
     ax.plot(x_axis, train,'-ok', color='r', label='Train')
     ax.plot(x_axis, vald, '-ok', color='b', label='Validation')
     plt.xticks(x_axis, x_axis)
-    plt.ylabel("Mean Accuracy (%)")
-    plt.xlabel("Training set size (samples)")
-    #title = "Accuracy as function of training set size"
-    title = "Acuuracy as function of training set size, single validation set, C = 0.0005"
-    '''if cross:
-        title = "Mean " + title + ", cross-validation (5)"
-    else:
-        title += ", single validation set"'''
+    plt.ylabel(y_label)
+    plt.xlabel(x_label)
     plt.title(title)
     ax.legend()
     plt.show()

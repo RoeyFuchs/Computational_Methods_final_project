@@ -13,13 +13,15 @@ import torch.nn as nn
 from torch import optim
 import torch.nn.functional as F
 import torch
-from SVM_NO_REGULARIZTION import *
-from SVM_WITH_REGULARIZTION import *
-from SVM_GRID_SEARCH import *
+from SVM import *
+from svm_with_regulariztion import *
+from svm_grid_search import *
+from logistic_regression_without_regulariztion import  *
 
 DATA_FILE = os.getcwd() + "\data\data.arff"
 TEST_SET_SIZE = 0.1
 TRAINING_SET_SIZE = 1 - TEST_SET_SIZE
+
 
 with open(DATA_FILE, encoding='utf-8') as f:
     data = arff.loadarff(f)  # load arff file (data)
@@ -44,9 +46,10 @@ train_data_x, test_data_x, train_data_y, test_data_y = train_test_split(data_x, 
 # test set
 
 
-find_best_svm_model(train_data_x,train_data_y)
-witout_k_fold_with_regulariztion(train_data_x, train_data_y)
-witout_k_fold(train_data_x, train_data_y)
+'''lr = lr_witout_k_fold(train_data_x, train_data_y)
+svm_model = find_best_svm_model(train_data_x,train_data_y)
+witout_k_fold_with_regulariztion(train_data_x, train_data_y)'''
+without_cross(train_data_x, train_data_y)
 
 
 prec = [0.2, 0.4, 0.6, 0.8, 1]
