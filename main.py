@@ -14,7 +14,6 @@ from torch import optim
 import torch.nn.functional as F
 import torch
 from SVM import *
-from svm_with_regulariztion import *
 from svm_grid_search import *
 from logistic_regression_without_regulariztion import  *
 
@@ -49,8 +48,8 @@ train_data_x, test_data_x, train_data_y, test_data_y = train_test_split(data_x, 
 '''lr = lr_witout_k_fold(train_data_x, train_data_y)
 svm_model = find_best_svm_model(train_data_x,train_data_y)
 witout_k_fold_with_regulariztion(train_data_x, train_data_y)'''
-without_cross(train_data_x, train_data_y)
-
+without_cross(train_data_x, train_data_y, regularization=True)
+exit()
 
 prec = [0.2, 0.4, 0.6, 0.8, 1]
 acc_train = []

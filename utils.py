@@ -1,4 +1,5 @@
 from random import random
+import sys
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -59,3 +60,10 @@ def plot_data(x, y):
     ax.legend(fontsize=8, ncol=1)
     plt.title("Binary classification by 3 relevant parameters")
     plt.show()
+
+def get_reg_title(c):
+    if c == sys.float_info.max:
+        return "$\infty$"
+    else:
+        return str(c)
+
