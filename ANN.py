@@ -1,18 +1,55 @@
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
+from sklearn.model_selection import cross_validate
+from sklearn.neural_network import MLPClassifier
+import numpy as np
+from utils import plot_train_vald, get_reg_title
+import sys
+
+NO_REGULARIZATION = 10
+
+def with_cross(train_data_x, train_data_y, regularization=False):
+    c = 0.0001 if regularization else NO_REGULARIZATION
+    prec = [0.2, 0.4, 0.6, 0.8, 1]
+    acc_train = []
+    acc_vald = []
+    sampels_num = [int(x * len(train_data_x)*(4/5)) for x in prec]
+    for k in sampels_num:
+        print(int(len(train_data_x) * k))
+        clf =MLPClassifier(hidden_layer_sizes=(3,), solver='adam', activation='relu', alpha=c, max_iter=20000)
+        result = cross_validate(clf, train_data_x[:k], train_data_y[:k], cv=5, scoring='accuracy',
+                                return_train_score=True)
+
+        acc_vald.append(round(np.sum(result['test_score']) / len(result['test_score']), 3))
+        acc_train.append(round(np.sum(result['train_score']) / len(result['train_score']), 3))
+
+    plot_train_vald(acc_train, acc_vald, sampels_num, x_label="Training set size (samples)",
+                    y_label="Mean Accuracy (%)",
+                    title="Mean Accuracy as function of training set size, cv (5), C={0}".format(get_reg_title(c)))
 
 
-class ANN(nn.Module):
-    def __init__(self):
-        super(ANN, self).__init__()
-        self.fc1 = nn.Linear(7, 10)
-        self.fc2 = nn.Linear(10, 4)
-        self.fc3 = nn.Linear(4,2)
+def without_cross(train_data_x, train_data_y, regularization=False):
+    c = 0.0001 if regularization else NO_REGULARIZATION
+    training_set_size = int((4 / 5) * len(train_data_x))
+    vald_x = train_data_x[training_set_size + 1:]
+    vald_y = train_data_y[training_set_size + 1:]
 
-    def forward(self, x):
-        x = x.view(-1, 7)
-        out = F.relu(self.fc1(x))
-        out = F.relu(self.fc2(out))
-        out = self.fc3(out)
-        return F.log_softmax(out, dim=1)
+    train_data_x = train_data_x[:training_set_size]
+    train_data_y = train_data_y[:training_set_size]
+
+    prec = [0.2, 0.4, 0.6, 0.8, 1]
+    acc_train = []
+    acc_vald = []
+    sampels_num = [int(x * len(train_data_x)) for x in prec]
+    for k in sampels_num:
+        print(int(len(train_data_x) * k))
+        clf =MLPClassifier(hidden_layer_sizes=(3,), solver='adam', activation='relu', alpha=c, max_iter=20000)
+
+        clf.fit(train_data_x[:k], train_data_y[:k])
+        y_hat = clf.predict(vald_x[:int(k / 5)])
+        acc_vald.append(np.sum(y_hat == vald_y[:int(k / 5)]) / len(vald_y[:int(k / 5)]))
+
+        y_hat = clf.predict(train_data_x[:k])
+        acc_train.append(np.sum(y_hat == train_data_y[:k]) / len(train_data_y[:k]))
+
+    plot_train_vald(acc_train, acc_vald, sampels_num, x_label="Training set size (samples)", y_label="Accuracy (%)",
+                    title="Accuracy as function of training set size, single validation set, C={}".format(
+                        get_reg_title(c)))

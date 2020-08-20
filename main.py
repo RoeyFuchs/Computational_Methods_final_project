@@ -4,6 +4,7 @@ from scipy.io import arff  # convert from artff to csv
 
 import LR
 import SVM
+import ANN
 from utils import remove_example_id, split_x_y, remove_unnecessary_features, split_k, shuffel, plot_data, plot_train_vald
 from sklearn.model_selection import train_test_split, cross_validate
 from sklearn.preprocessing import StandardScaler
@@ -11,7 +12,6 @@ from sklearn import svm
 from Q3 import q3
 import os  # to get working directory
 import torch  # ANN
-from ANN import ANN
 import torch.nn as nn
 from torch import optim
 import torch.nn.functional as F
@@ -47,8 +47,9 @@ train_data_x, test_data_x, train_data_y, test_data_y = train_test_split(data_x, 
 
 '''lr = lr_witout_k_fold(train_data_x, train_data_y)
 svm_model = find_best_svm_model(train_data_x,train_data_y)
-witout_k_fold_with_regulariztion(train_data_x, train_data_y)'''
-LR.without_cross(train_data_x, train_data_y, regularization=True)
+witout_k_fold_with_regulariztion(train_data_x, train_data_y)
+LR.without_cross(train_data_x, train_data_y, regularization=True)'''
+ANN.with_cross(train_data_x, train_data_y, regularization=True)
 exit()
 
 prec = [0.2, 0.4, 0.6, 0.8, 1]
