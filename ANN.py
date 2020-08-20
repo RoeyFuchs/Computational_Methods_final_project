@@ -4,17 +4,17 @@ import numpy as np
 from utils import plot_train_vald, get_reg_title
 import sys
 
-NO_REGULARIZATION = 10
+NO_REGULARIZATION = 0
 
 def with_cross(train_data_x, train_data_y, regularization=False):
-    c = 0.0001 if regularization else NO_REGULARIZATION
+    alpha = 52 if regularization else NO_REGULARIZATION
     prec = [0.2, 0.4, 0.6, 0.8, 1]
     acc_train = []
     acc_vald = []
-    sampels_num = [int(x * len(train_data_x)*(4/5)) for x in prec]
+    sampels_num = [int(x * len(train_data_x) * (4 / 5)) for x in prec]
     for k in sampels_num:
         print(int(len(train_data_x) * k))
-        clf =MLPClassifier(hidden_layer_sizes=(3,), solver='adam', activation='relu', alpha=c, max_iter=20000)
+        clf = MLPClassifier(hidden_layer_sizes=(3,), solver='adam', activation='relu', alpha=alpha, max_iter=20000)
         result = cross_validate(clf, train_data_x[:k], train_data_y[:k], cv=5, scoring='accuracy',
                                 return_train_score=True)
 
@@ -23,11 +23,11 @@ def with_cross(train_data_x, train_data_y, regularization=False):
 
     plot_train_vald(acc_train, acc_vald, sampels_num, x_label="Training set size (samples)",
                     y_label="Mean Accuracy (%)",
-                    title="Mean Accuracy as function of training set size, cv (5), C={0}".format(get_reg_title(c)))
+                    title="Mean Accuracy as function of training set size, cv (5), $\\alpha$={0}".format(alpha))
 
 
 def without_cross(train_data_x, train_data_y, regularization=False):
-    c = 0.0001 if regularization else NO_REGULARIZATION
+    alpha = 52 if regularization else NO_REGULARIZATION
     training_set_size = int((4 / 5) * len(train_data_x))
     vald_x = train_data_x[training_set_size + 1:]
     vald_y = train_data_y[training_set_size + 1:]
@@ -41,7 +41,7 @@ def without_cross(train_data_x, train_data_y, regularization=False):
     sampels_num = [int(x * len(train_data_x)) for x in prec]
     for k in sampels_num:
         print(int(len(train_data_x) * k))
-        clf =MLPClassifier(hidden_layer_sizes=(3,), solver='adam', activation='relu', alpha=c, max_iter=20000)
+        clf = MLPClassifier(hidden_layer_sizes=(3,), solver='adam', activation='relu', alpha=alpha, max_iter=20000)
 
         clf.fit(train_data_x[:k], train_data_y[:k])
         y_hat = clf.predict(vald_x[:int(k / 5)])
@@ -51,5 +51,4 @@ def without_cross(train_data_x, train_data_y, regularization=False):
         acc_train.append(np.sum(y_hat == train_data_y[:k]) / len(train_data_y[:k]))
 
     plot_train_vald(acc_train, acc_vald, sampels_num, x_label="Training set size (samples)", y_label="Accuracy (%)",
-                    title="Accuracy as function of training set size, single validation set, C={}".format(
-                        get_reg_title(c)))
+                    title="Accuracy as function of training set size, single validation set, $\\alpha$={0}".format(alpha))
