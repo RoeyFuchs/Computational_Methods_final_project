@@ -1,4 +1,4 @@
-from sklearn.model_selection import cross_validate
+from sklearn.model_selection import cross_validate, GridSearchCV
 from sklearn.neural_network import MLPClassifier
 import numpy as np
 from utils import plot_train_vald, get_reg_title
@@ -7,7 +7,7 @@ import sys
 NO_REGULARIZATION = 0
 
 def with_cross(train_data_x, train_data_y, regularization=False):
-    alpha = 52 if regularization else NO_REGULARIZATION
+    alpha = 0.015 if regularization else NO_REGULARIZATION
     prec = [0.2, 0.4, 0.6, 0.8, 1]
     acc_train = []
     acc_vald = []
@@ -27,7 +27,7 @@ def with_cross(train_data_x, train_data_y, regularization=False):
 
 
 def without_cross(train_data_x, train_data_y, regularization=False):
-    alpha = 52 if regularization else NO_REGULARIZATION
+    alpha = 0.015 if regularization else NO_REGULARIZATION
     training_set_size = int((4 / 5) * len(train_data_x))
     vald_x = train_data_x[training_set_size + 1:]
     vald_y = train_data_y[training_set_size + 1:]
@@ -52,3 +52,12 @@ def without_cross(train_data_x, train_data_y, regularization=False):
 
     plot_train_vald(acc_train, acc_vald, sampels_num, x_label="Training set size (samples)", y_label="Accuracy (%)",
                     title="Accuracy as function of training set size, single validation set, $\\alpha$={0}".format(alpha))
+
+
+def find_best_svm_model(train_data_x, train_data_y):
+    param_grid = [
+        {'degree': [1, 2, 3, 4, 5], 'coef0': [0, 1, -1], 'gamma': [1, 0.5, 2, 4], 'kernel': ['poly']}
+    ]
+    clf = GridSearchCV(MLPClassifier(max_iter=20000), param_grid, scoring='accuracy', cv=5)
+    clf.fit(train_data_x, train_data_y)
+    return clf
