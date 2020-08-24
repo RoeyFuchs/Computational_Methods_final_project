@@ -1,6 +1,6 @@
 import pandas as pd  # for load dataset
 import numpy as np
-from scipy.io import arff  # convert from artff to csv
+from scipy.io import arff  # convert from arff to csv
 from utils import split_x_y
 import LR
 import SVM
@@ -28,10 +28,6 @@ data_x = scaler.transform(data_x)
 train_data_x, test_data_x, train_data_y, test_data_y = train_test_split(data_x, data_y, test_size=TEST_SET_SIZE,
                                                                         shuffle=True)  # split data to traning and test set
 
-#################### need to remove###########################
-SVM.with_cross_validation(train_data_x, train_data_y, regularization=True)
-exit()
-##############################################################
 
 # get the best models (by grid search)
 svm = SVM.find_best_svm_model(train_data_x, train_data_y)

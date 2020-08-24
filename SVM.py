@@ -3,7 +3,6 @@ from sklearn.model_selection import cross_validate, GridSearchCV
 import numpy as np
 from sklearn.svm import SVC
 from utils import plot_train_vald, get_reg_title
-import sys
 
 NO_REGULARIZATION = 150
 
