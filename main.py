@@ -20,7 +20,8 @@ raw_data = pd.DataFrame(data[0]).to_numpy()  # load data and convert to numpy ar
 
 data_x, data_y = split_x_y(raw_data)  # split features and labels
 
-scaler = StandardScaler()  # normalize the data
+# normalize the data
+scaler = StandardScaler()
 scaler.fit(data_x)
 data_x = scaler.transform(data_x)
 
@@ -43,7 +44,7 @@ for i in range(100):
     y_hat_ann = ann.predict(test_data_x)
     y_hat_lr = lr.predict(test_data_x)
     y_hat_ensemble = ensemble_model.predict(test_data_x)
-    # check resulets
+    # check results
     y_hat_svm_result.append((np.sum((y_hat_svm == test_data_y)) / len(test_data_y)) * 100)
     y_hat_ann_result.append((np.sum((y_hat_ann == test_data_y)) / len(test_data_y)) * 100)
     y_hat_lr_result.append((np.sum((y_hat_lr == test_data_y)) / len(test_data_y)) * 100)

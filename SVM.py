@@ -53,6 +53,6 @@ def find_best_svm_model(train_data_x, train_data_y):
     param_grid = [
         {'degree': [1, 2, 3, 4, 5], 'coef0': [0, 1, -1], 'gamma': [1, 0.5, 2, 4], 'kernel': ['poly']}
     ]
-    clf = GridSearchCV(SVC(C=1, max_iter=20000), param_grid, scoring='accuracy', cv=5)
+    clf = GridSearchCV(SVC(C=1, max_iter=2000000), param_grid, scoring='accuracy', cv=5)
     clf.fit(train_data_x, train_data_y)
     return clf
